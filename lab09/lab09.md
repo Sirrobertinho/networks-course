@@ -127,7 +127,12 @@ todo
    $$\approx \dfrac{1.22 \cdot MSS}{RTT \cdot \sqrt{L}}$$
 
 #### Решение
-todo
+$\text{1. Скорость соединения увеличивается с } \dfrac{W}{2 \cdot RTT} \ \text{до } \dfrac{W}{RTT} \Rightarrow \text{Размер окна увеличивается с } \dfrac{W}{2} \ \text{до } W.$  
+$\text{Размер окна увеличивается на 1 за } RTT.$  
+$\Rightarrow \text{всего пакетов было передано: } \sum_{i = \frac{W}{2}}^{W} i = \dfrac{\frac{W}{2} + W}{2} \cdot (\dfrac{W}{2} + 1) = \dfrac{3}{8} W^2 + \dfrac{3}{4} W$  
+$\text{Был потерян один пакет } \Rightarrow L = \dfrac{1}{\frac{3}{8} W^2 + \frac{3}{4} W}. \blacksquare$  
+$\text{2. Аппроксимируем } L \ \text{так (можем так сделать, ведь отбросили линейную часть, которая "меньше" квадратичной): } L \approx \dfrac{1}{\frac{3}{8} W^2} \Rightarrow W = \dfrac{2\sqrt{6}}{3 \sqrt{L}}$  
+$\text{Теперь посчитаем среднюю скорость: средняя скорость = } \dfrac{\text{средний размер окна} \cdot MSS}{RTT} = \dfrac{(\frac{W}{2} + W) \cdot MSS}{RTT} =  \dfrac{\frac{3}{4} W \cdot MSS}{RTT} \stackrel{\text{подставляем } W \ \text{выраженный через } L}= \dfrac{2\sqrt{6}}{3 \sqrt{L}} \cdot \dfrac{\frac{3}{4} \cdot MSS}{RTT} = \dfrac{\frac{\sqrt{6}}{2} \cdot MSS}{RTT \cdot \sqrt{L}} \approx \dfrac{1.22 \cdot MSS}{RTT \cdot \sqrt{L}}. \blacksquare$
 
 ### Задача 2. Найдите функциональную зависимость (3 балла)
 Рассмотрим модификацию алгоритма управления перегрузкой протокола TCP. Вместо
@@ -141,4 +146,8 @@ TCP-отправитель увеличивает размер своего ок
 увеличения размера окна перегрузки с $\frac{W}{2}$ до $W$.
 
 #### Решение
-todo
+$\text{2. Пусть } T - \ \text{время за которое окно увеличивается с } \dfrac{W}{2} \ \text{до } W. \ \text{Тогда верна формула(учитывая, что окно увеличивается мультипликативно): } \dfrac{W}{2} \cdot a^T = W$  
+$\Rightarrow a^T = 2 \Rightarrow T = \dfrac{ln(2)}{ln(a)} - \ \text{время не зависит от средней пропускной способности } TCP \ \text{соединения.}$  
+$\text{1. Потеря у нас бывает одна при сбросе окна с максимального окна перегрузки. Пусть до этого момента времени мы успеваем передать } N \ \text{сегментов.}$  
+$\Rightarrow N = \sum_{i = 0}^{T} \dfrac{W}{2} \cdot a^i = \dfrac{W}{2} \cdot \dfrac{a^{T + 1} - 1}{a - 1} = \dfrac{W}{2} \cdot \dfrac{2 \cdot a - 1}{a - 1} = W \cdot \dfrac{2a - 1}{2a - 2}$  
+$\Rightarrow L = \dfrac{1}{N} = \dfrac{1}{W \cdot \frac{2a - 1}{2a - 2}} = \dfrac{2a - 2}{2a - 1} \cdot \dfrac{1}{W}. - \ \text{ответ}$
